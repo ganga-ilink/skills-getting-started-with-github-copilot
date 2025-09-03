@@ -17,14 +17,38 @@ document.addEventListener("DOMContentLoaded", () => {
       Object.entries(activities).forEach(([name, details]) => {
         const activityCard = document.createElement("div");
         activityCard.className = "activity-card";
+        activityCard.style.border = "1px solid #ccc";
+        activityCard.style.borderRadius = "8px";
+        activityCard.style.padding = "16px";
+        activityCard.style.marginBottom = "20px";
+        activityCard.style.background = "#fafbfc";
+        activityCard.style.boxShadow = "0 2px 6px rgba(0,0,0,0.04)";
 
         const spotsLeft = details.max_participants - details.participants.length;
 
+        // Participants section with pretty CSS class
+        let participantsSection = `
+          <div class="activity-card-participants">
+            <strong>Participants:</strong>
+            ${
+              details.participants.length > 0
+                ? `<ul>${details.participants
+                    .map(
+                      (p) =>
+                        `<li>${p}</li>`
+                    )
+                    .join("")}</ul>`
+                : `<span class="no-participants">No participants yet</span>`
+            }
+          </div>
+        `;
+
         activityCard.innerHTML = `
-          <h4>${name}</h4>
+          <h4 style="margin-top:0; color:#2d3a4a;">${name}</h4>
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          ${participantsSection}
         `;
 
         activitiesList.appendChild(activityCard);
